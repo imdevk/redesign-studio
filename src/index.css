@@ -1,0 +1,99 @@
+@import "tailwindcss";
+@import "@fontsource/dm-sans/400.css";
+@import "@fontsource/dm-sans/500.css";
+@import "@fontsource/dm-sans/700.css";
+@import "@fontsource/instrument-serif/400.css";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --color-ink: #111318;
+  --color-muted: #5d6270;
+  --color-line: #e3e5ea;
+  --color-canvas: #eceef2;
+  --color-accent: #4f46e5;
+  --color-accent-dark: #4338ca;
+  --color-accent-tint: #eef0ff;
+  --color-good: #15803d;
+  --color-good-tint: #e8f6ed;
+  --color-bad: #b42318;
+  --color-bad-tint: #fef3f2;
+  --color-warn-tint: #fff7e6;
+}
+
+@layer base {
+  html { color: var(--color-ink); background: var(--color-canvas); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; font-family: var(--font-sans); min-height: 100vh; font-feature-settings: "ss01"; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 6px; }
+  ::selection { background: #dcd9ff; }
+}
+
+@layer components {
+  /* Buttons: ink is the main action, indigo is reserved for selection and focus. */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    height: 2.5rem; padding: 0 1rem; border-radius: .55rem; font-size: .875rem; font-weight: 500;
+    border: 1px solid #d6d9e0; background: #fff; color: var(--color-ink); cursor: pointer; white-space: nowrap;
+    transition: background-color .15s, border-color .15s, color .15s;
+  }
+  .btn:hover:not(:disabled) { background: #f6f7f9; border-color: #b9bdc9; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary { background: var(--color-ink); border-color: var(--color-ink); color: #fff; font-weight: 700; }
+  .btn-primary:hover:not(:disabled) { background: #2a2e38; border-color: #2a2e38; }
+  .btn-danger { color: var(--color-bad); }
+
+  .field {
+    display: block; width: 100%; height: 2.6rem; padding: 0 .8rem; border-radius: .55rem; font: inherit; font-size: .925rem;
+    border: 1px solid #d6d9e0; background: #fff; color: var(--color-ink); transition: border-color .15s, box-shadow .15s;
+  }
+  .field:hover:not(:disabled) { border-color: #b9bdc9; }
+  .field:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px #4f46e51f; }
+  textarea.field { height: auto; padding: .65rem .8rem; resize: vertical; min-height: 4.5rem; }
+  .field::placeholder { color: #9aa0b0; }
+  .label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .45rem; }
+  .hint { font-size: .8rem; line-height: 1.45; color: var(--color-muted); }
+
+  /* The right-hand work area groups: a quiet outline, not a floating card. */
+  .panel { background: #fff; border: 1px solid var(--color-line); border-radius: .85rem; }
+
+  /* Steps live in one continuous rail and are separated by a hairline. */
+  .step { padding: 1.5rem 1.5rem 1.6rem; border-bottom: 1px solid var(--color-line); }
+  .step-title { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 1.1rem; font-family: var(--font-display); font-weight: 400; font-size: 1.65rem; line-height: 1.1; letter-spacing: -.005em; }
+  .step-no { font-family: var(--font-sans); font-size: .78rem; font-weight: 700; color: var(--color-accent); min-width: 1ch; transform: translateY(-.25em); }
+
+  /* Option rows: flat, with a bar on the chosen one. */
+  .choice {
+    position: relative; display: flex; gap: .7rem; align-items: flex-start; padding: .55rem .8rem .55rem .9rem;
+    border-radius: .55rem; cursor: pointer; transition: background-color .12s;
+  }
+  .choice:hover { background: #f4f5f8; }
+  .choice:has(input:checked) { background: var(--color-accent-tint); }
+  .choice:has(input:checked)::before { content: ""; position: absolute; left: 0; top: .5rem; bottom: .5rem; width: 3px; border-radius: 3px; background: var(--color-accent); }
+  .choice input { margin-top: .22rem; accent-color: var(--color-accent); }
+
+  /* Multi-select pills. */
+  .chip {
+    display: inline-flex; align-items: center; height: 2.1rem; padding: 0 .85rem; border-radius: 999px; font-size: .85rem; cursor: pointer;
+    border: 1px solid #d6d9e0; background: #fff; transition: background-color .12s, border-color .12s, color .12s;
+  }
+  .chip:hover { border-color: #b9bdc9; }
+  .chip input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .chip:has(input:checked) { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
+  .chip:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  /* Diagonal hatch that echoes the picture placeholders inside the designs. */
+  .hatch { background: repeating-linear-gradient(135deg, transparent 0 9px, #4f46e522 9px 10px), linear-gradient(135deg, #e4e4ff, #f3f3ff); }
+}
+
+@keyframes slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(310%); } }
+.progress > span { animation: slide 1.5s ease-in-out infinite; }
+
+@keyframes settle { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.settle > * { animation: settle .6s cubic-bezier(.2, .7, .2, 1) both; }
+.settle > *:nth-child(2) { animation-delay: .08s; }
+.settle > *:nth-child(3) { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .progress > span { animation: none; width: 100%; }
+  .settle > * { animation: none; }
+}

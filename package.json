@@ -1,0 +1,60 @@
+{
+  "name": "redesign-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local tool: enter a website address, answer a few questions, get a responsive redesign concept as a single HTML file.",
+  "type": "module",
+  "scripts": {
+    "setup": "playwright install chromium",
+    "dev": "concurrently -k -n server,ui -c blue,magenta \"node --watch server/index.js\" \"vite\"",
+    "build": "vite build",
+    "start": "vite build && node server/index.js --serve",
+    "server": "node server/index.js",
+    "test": "node --test server/tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/lora": "^5.3.0",
+    "@fontsource/merriweather": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/nunito": "^5.3.0",
+    "@fontsource/playfair-display": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@fontsource/work-sans": "^5.3.0",
+    "cheerio": "^1.2.0",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "lucide-react": "^1.55.0",
+    "playwright": "^1.64.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "concurrently": "^10.0.6",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.4"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imdevk/redesign-studio.git"
+  },
+  "keywords": [
+    "website-redesign",
+    "openai",
+    "playwright",
+    "react",
+    "express",
+    "local-first"
+  ],
+  "author": "Devesh Khatri"
+}
